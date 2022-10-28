@@ -1,0 +1,55 @@
+body{
+  padding: 0; 
+  margin: 0; 
+  overflow-y: hidden; 
+  zoom: 0.75;
+  position:relative;
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+.canvasWrapper{
+  position:absolute;
+  display: inline-block;
+}
+.next{
+  position: absolute;
+  font-size: 80px;
+  font-family: 'Bebas Neue', cursive;
+  font-weight: bold;
+  top: 15px;
+  left: 670px;
+}
+#defeat{
+  display: none;
+  font-size: 80px;
+  font-weight:bold;
+  line-height: 800px;
+  color:#fff;
+  position: absolute;
+  top:0;
+  left:0;
+  width: 600px;
+  height: 900px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+.X , .Y{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 1px;
+  height: 900px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.X{
+  width: 1px;
+  height: 900px;
+}
+
+.Y{
+  width: 600px;
+  height: 1px;
+}
