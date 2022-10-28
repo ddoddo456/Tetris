@@ -1,25 +1,29 @@
-for (let i = 0; i < 18; i++) {
-  for (let j = 0; j < 18; j++) {
-    board[i][j] = new Block(50 * j, 50 * i);
+/* 보드판을 그림 */
+for (let y = 0; y < 18; y++) {
+  /* 블록을 생성한다 */
+  for (let x = 0; x < 18; x++) {
+    board[y][x] = new Block(50 * x, 50 * y);
   }
-  board[i][0].draw(color[7]);
-  board[i][0].boolean = true;
-  board[i][11].draw(color[7]);
-  board[i][11].boolean = true;
+
+  /*  */
+  board[y][0].draw(color[7]);
+  board[y][0].crash = true;
+  board[y][11].draw(color[7]);
+  board[y][11].crash = true;
 }
-for (let i = 1; i < 12; i++) {
-  board[17][i].draw(color[7]);
-  board[17][i].boolean = true;
+for (let y = 1; y < 12; y++) {
+  board[17][y].draw(color[7]);
+  board[17][y].crash = true;
 }
-for (let i = 0; i < 4; i++) {
-  blockArray[i] = form[getRandom()];
-  blockColorArray[i] = color[getRandom()];
+for (let y = 0; y < 4; y++) {
+  blockArray[y] = form[getRandom()];
+  blockColorArray[y] = color[getRandom()];
 }
 for (let k = 0; k < 3; k++) {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      subBoard[k][i][j] = new subBlock(50 * j, 50 * i, canvasArray[k + 1], k + 1);
+  for (let y = 0; y < 4; y++) {
+    for (let x = 0; x < 4; x++) {
+      subBoard[k][y][x] = new subBlock(50 * x, 50 * y, canvasArray[k + 1], k + 1);
     }
   }
 }
-A.init(blockArray[0]);
+A.ynyt(blockArray[0]);

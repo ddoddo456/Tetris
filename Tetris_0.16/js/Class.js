@@ -12,7 +12,6 @@ class customCanvas extends HTMLElement {
 customElements.define("custom-canvas", customCanvas);
 
 class Control {
-  // 블럭 4개를 각각 컨트롤 함.
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -40,7 +39,6 @@ class Control {
     }
   }
   done(currentForm) {
-    // this.index = getRandom();
     Random = getRandom();
     let sort = [];
     for (let i = 0; i < 4; i++) {
@@ -50,7 +48,7 @@ class Control {
       return a - b;
     });
     for (let i = 0; i < 4; i++) {
-      board[this.y + currentForm[i][1]][this.x + currentForm[i][0]].boolean = true;
+      board[this.y + currentForm[i][1]][this.x + currentForm[i][0]].crash = true;
     }
     for (let i = 0; i < 4; i++) {
       board[this.y + sort[i][0]][this.x + currentForm[i][0]].clear();
@@ -68,7 +66,7 @@ class Control {
   check(form, toX, toY) {
     let count = 0;
     for (let i = 0; i < 4; i++) {
-      if (board[this.y + form[i][1] + toY][this.x + form[i][0] + toX].boolean == true) {
+      if (board[this.y + form[i][1] + toY][this.x + form[i][0] + toX].crash == true) {
         count++;
       }
     }
@@ -77,7 +75,7 @@ class Control {
   rotateCheck(form) {
     let count = 0;
     for (let i = 0; i < 4; i++) {
-      if (board[this.y + reverseArr(form[i])[1]][this.x + reverseArr(form[i])[0]].boolean == true) {
+      if (board[this.y + reverseArr(form[i])[1]][this.x + reverseArr(form[i])[0]].crash == true) {
         count++;
       }
     }
@@ -85,7 +83,7 @@ class Control {
   }
   defeat(form) {
     for (let i = 0; i < 4; i++) {
-      if (board[this.y + form[i][1]][this.x + form[i][0]].boolean == true) {
+      if (board[this.y + form[i][1]][this.x + form[i][0]].crash == true) {
         document.getElementById("defeat").style.display = "block";
         ctx.clearRect(0, 0, 1000, 1000);
       }
@@ -100,7 +98,7 @@ class Control {
 
       for (let i = 0; i < 18; i++) {
         for (let j = 0; j < 18; j++) {
-          if (board[i][j].boolean == false) {
+          if (board[i][j].crash == false) {
             board[i][j].delete();
           }
         }
@@ -142,11 +140,10 @@ class subBlock {
 }
 
 class Block {
-  // 블럭 각각의 매서드
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.boolean = false;
+    this.crash = false;
     this.color = [];
   }
   draw(colorArray) {
@@ -181,15 +178,15 @@ class Block {
     if (column(board[this.y / 50]) == 10) {
       for (let i = 1; i < 11; i++) {
         board[this.y / 50][i].delete();
-        board[this.y / 50][i].boolean = false;
+        board[this.y / 50][i].crash = false;
       }
       for (let i = this.y / 50; i > 1; i--) {
         for (let j = 1; j < 11; j++) {
-          if (board[i][j].boolean == true) {
+          if (board[i][j].crash == true) {
             board[i][j].delete(this.color);
-            board[i][j].boolean = false;
+            board[i][j].crash = false;
             board[i + 1][j].draw(board[i][j].color);
-            board[i + 1][j].boolean = true;
+            board[i + 1][j].crash = true;
           }
         }
       }
@@ -198,7 +195,7 @@ class Block {
 
   defeat(form) {
     for (let i = 0; i < 4; i++) {
-      if (board[this.y + form[i][1]][this.x + form[i][0]].boolean == true) {
+      if (board[this.y + form[i][1]][this.x + form[i][0]].crash == true) {
         document.getElementById("defeat").style.display = "block";
         ctx.clearRect(0, 0, 1000, 1000);
       }
@@ -206,12 +203,10 @@ class Block {
   }
 
   collisionCheck() {
-    // 충돌거리 계산.
     let i = 1;
-    while (board[this.y / 50 + i][this.x / 50].boolean == false) {
+    while (board[this.y / 50 + i][this.x / 50].crash == false) {
       i++;
     }
     shadowArray.push(i);
   }
-
 }

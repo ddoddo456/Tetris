@@ -36,7 +36,67 @@ document.querySelectorAll(".canvas").forEach(elem => {
   i++;
 });
 ctx = canvasArray[0];
-let board = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
+
+const initField = (Xeach, Yeach) => {
+  const field = [];
+
+  const createField = () => {
+    let xCur = Xeach;
+    let yCur = Yeach;
+    const element = (x,y) => {
+      return ({ x : x, y : y, crash : false, color : '#fff'});
+    };
+  
+    const create = () => {
+      field.push(element(xCur,yCur));
+      xCur--;
+      if(xCur > 0){
+        return create();
+      }else if(yCur > 0){
+        return changePosition();
+      }
+    };
+  
+    const changePosition = () => {
+      xCur = Xeach;
+      yCur--;
+      if(yCur > 0)
+        return create();
+    }
+
+    create();
+  }
+
+  const setWall = () => {
+    const getMinX = () => 1;
+    const getMinY = () => 1;
+    const getMaxX = () => Xeach;
+    const getMaxY = () => Yeach;
+
+    const setWallElement = element => {
+      element.crash = true;
+      element.color = '#000';
+    }
+
+    field
+      .filter(item => item.x <= getMaxX() && item.y == getMinY())
+      .map(item => setWallElement(item));
+    field
+      .filter(item => item.x == getMaxX() && item.y <= getMaxY())
+      .map(item => setWallElement(item));
+    field
+      .filter(item => item.x >= getMinX() && item.y == getMaxY())
+      .map(item => setWallElement(item));
+    field
+      .filter(item => item.x == getMinX() && item.y >= getMinY())
+      .map(item => setWallElement(item));
+  }
+
+  createField();
+  setWall();
+  return field;
+}
+
 let subBoard = [
   [
     [], [], [], []
@@ -114,7 +174,7 @@ function getRandom() {
 function column(row) {
   let count = 0;
   for (let i = 1; i < 11; i++) {
-    if (row[i].boolean == true) {
+    if (row[i].crash == true) {
       count++;
     }
   }
